@@ -1,0 +1,421 @@
+/* ============ Tokens ============ */
+:root{
+  --sky-top:#04060f;
+  --sky-mid:#0e122b;
+  --sky-low:#1e1a3d;
+  --sky-horizon:#3a204d;
+  
+  --asphalt:#141317;
+  --asphalt-2:#1e1d22;
+  --lane:#ffcc33;
+  --grass-1:#163b21;
+  --grass-2:#0f2b16;
+  --truck-pink:#ff6fae;
+  --truck-pink-dark:#d94f8c;
+  --truck-trim:#55565c;
+  --truck-glass:#cfe4ea;
+  --cream:#fff3e0;
+  --gold:#ffb347;
+
+  --font-display:"Rajdhani", sans-serif;
+  --font-body:"Inter", sans-serif;
+}
+
+*{box-sizing:border-box;}
+html,body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  font-family:var(--font-body);
+  color:var(--cream);
+}
+
+@media (max-width:640px){
+  html,body{overflow-y:auto; overflow-x:hidden; height:auto;}
+}
+
+.scene{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* ============ CIELO NOCTURNO ============ */
+.sky{
+  position:relative;
+  flex:1 1 auto;
+  min-height:450px;
+  overflow:hidden;
+  background:linear-gradient(
+    to bottom,
+    var(--sky-top) 0%,
+    var(--sky-mid) 45%,
+    var(--sky-low) 78%,
+    var(--sky-horizon) 100%
+  );
+  display:flex;
+  align-items:center; 
+  justify-content:center;
+}
+
+#stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  animation: twinkle linear infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 1);
+  animation: shoot linear forwards;
+  opacity: 0;
+}
+
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
+}
+
+@keyframes shoot {
+  0% { transform: translate(0, 0) rotate(-35deg); opacity: 1; }
+  100% { transform: translate(-400px, 250px) rotate(-35deg); opacity: 0; }
+}
+
+.clouds span{
+  position:absolute;
+  border-radius:999px;
+  background:rgba(243, 243, 243, 0.05);
+  filter:blur(2px);
+  z-index: 1;
+}
+
+/* ============ SECCIÓN HERO ============ */
+.hero-copy{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top: -8vh; 
+}
+
+.brand{
+  margin:0;
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:.03em;
+  font-size:clamp(2.4rem, 8vw, 4rem);
+  line-height:1;
+  color:#fff8ec;
+  text-shadow:0 0 26px rgba(255,140,80,.25), 0 4px 0 rgba(0,0,0,.15);
+  animation:heroIn 1s cubic-bezier(.2,.9,.25,1) both;
+}
+.brand .underscore{
+  color:var(--truck-pink);
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--truck-pink);
+  box-shadow: 0 0 15px rgba(217, 79, 140, 0.5);
+  overflow: hidden;
+  margin: 15px 0 5px 0;
+  animation:heroIn 1s .1s cubic-bezier(.2,.9,.25,1) both;
+}
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tagline{
+  margin: 0;
+  font-family:var(--font-body);
+  font-weight:500;
+  font-size:clamp(.85rem, 2vw, 1.05rem);
+  letter-spacing:.02em;
+  color:#a9a1d1;
+  opacity:.9;
+  animation:heroIn 1s .15s cubic-bezier(.2,.9,.25,1) both;
+}
+
+.contact-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  animation:heroIn 1s .2s cubic-bezier(.2,.9,.25,1) both;
+}
+
+.dock{
+  display:flex;
+  gap:.55rem;
+  align-items:center;
+  padding:.5rem;
+  border-radius:999px;
+  background:rgba(16,11,26,.7);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 12px 30px rgba(0,0,0,.6);
+}
+
+.icon-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
+  text-decoration:none;
+  color:var(--cream);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:50%;
+  transition:transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.icon-btn svg{
+  width:19px;
+  height:19px;
+  fill:currentColor;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible{
+  transform:translateY(-3px) scale(1.06);
+  border-color:var(--gold);
+  background:rgba(255,179,71,.14);
+}
+
+.email-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(16,11,26,.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,111,174,.4);
+  color: var(--cream);
+  font-size: 0.95rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,.6);
+}
+.email-display .email-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--truck-pink);
+}
+
+@keyframes heroIn{
+  from{opacity:0; transform:translateY(14px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* ============ FRANJA PASTO Y CARRETERA ============ */
+.strip{
+  position:relative;
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  height:42vh;
+  min-height:330px;
+}
+
+.grass{
+  position:relative;
+  flex:1 1 auto;
+  overflow:hidden;
+}
+.grass-top{
+  background:linear-gradient(to bottom, var(--grass-1), var(--grass-2));
+  min-height:50px;
+}
+.grass-bottom{
+  background:linear-gradient(to bottom, var(--grass-2), #09170e);
+  min-height:70px;
+}
+
+/* Mechones de pasto */
+.grass-tuft {
+  position:absolute;
+  transform-origin:bottom center;
+  animation:sway 2.5s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* Flores más visibles */
+.flower{
+  position:absolute;
+  transform-origin:bottom center;
+  animation:sway 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.25)); /* Brillo sutil */
+  z-index: 2;
+}
+.flower svg{display:block; width:100%; height:100%;}
+
+@keyframes sway{
+  0%,100%{transform:rotate(-4deg);}
+  50%{transform:rotate(4deg);}
+}
+
+/* ============ CARRETERA ============ */
+.road{
+  position:relative;
+  flex:1.6 1 auto;
+  min-height:200px;
+  background:linear-gradient(to bottom, var(--asphalt-2), var(--asphalt));
+  overflow:hidden;
+  box-shadow:inset 0 8px 14px -8px rgba(0,0,0,.8), inset 0 -8px 14px -8px rgba(0,0,0,.8);
+}
+
+.road-noise{
+  position:absolute;
+  inset:0;
+  background-image:repeating-linear-gradient(
+    100deg,
+    rgba(255,255,255,.02) 0 2px,
+    transparent 2px 26px
+  );
+  animation:noiseMove 1.2s linear infinite;
+}
+
+@keyframes noiseMove{
+  from{background-position-x:0;}
+  to{background-position-x: 260px;}
+}
+
+.lane-line{
+  position:absolute;
+  top:50%;
+  left:-40px;
+  right:-40px;
+  height:8px;
+  transform:translateY(-50%);
+  background-image:repeating-linear-gradient(
+    to right,
+    var(--lane) 0 46px,
+    transparent 46px 88px
+  );
+  animation:laneMove 1.2s linear infinite;
+  box-shadow:0 0 10px rgba(255,204,51,.3);
+}
+
+@keyframes laneMove{
+  from{background-position-x:0;}
+  to{background-position-x:88px;}
+}
+
+/* ============ CYBERTRUCK ============ */
+.truck-wrap {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(80vw, 580px);
+  filter: drop-shadow(0 14px 14px rgba(0,0,0,.8));
+  animation: driveSuspension 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes driveSuspension {
+  0% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+  100% { transform: translateX(-50%) translateY(3px) rotate(0.2deg); }
+}
+
+.truck{width:100%; height:auto; display:block; overflow:visible;}
+.truck-shadow{fill:rgba(0,0,0,.6);}
+.truck-body{
+  stroke:var(--truck-pink-dark);
+  stroke-width:1.5;
+  stroke-linejoin:round;
+}
+.truck-glass{fill:#0c1117; opacity:1;}
+.truck-crease{
+  stroke:#fff2f8;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  filter:drop-shadow(0 0 4px rgba(255,240,250,.6));
+}
+.truck-lightbar{
+  stroke:#eaf7ff;
+  stroke-width: 5;
+  stroke-linecap:round;
+  filter:drop-shadow(0 0 12px rgba(210,245,255,1));
+}
+.truck-taillight{
+  stroke:#ff1447;
+  stroke-width: 6;
+  stroke-linecap:round;
+  filter:drop-shadow(0 0 10px rgba(255,20,71,1));
+}
+.truck-arch{fill:#111113;}
+.truck-trim{fill:#111113;}
+
+.truck-motto{
+  font-family:sans-serif(--font-display);
+  font-weight:700;
+  font-size:18px; /* Más grande y legible */
+  fill:#fff5fa;
+  letter-spacing:.06em;
+  text-anchor:middle;
+}
+
+/* Ejes de rotación actualizados a las nuevas coordenadas */
+.wheel{
+  animation:spin 1.2s linear infinite;
+}
+.wheel-front{ transform-origin: 120px 150px; }
+.wheel-rear{ transform-origin: 390px 150px; }
+
+.wheel .tire-outer{fill:#0b0b0c;}
+.wheel .tread rect{fill:#1a1a1c;}
+.wheel .rim-outer{fill:#2a2a2d;}
+.wheel .spokes rect{fill:#9a9ba0;}
+.wheel .hub-cap{fill:#ececed;}
+
+@keyframes spin{
+  to{ transform:rotate(-360deg); }
+}
+
+@media (max-width:420px){
+  .icon-btn{width:38px; height:38px;}
+  .icon-btn svg{width:17px; height:17px;}
+  .contact-section { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .brand, .tagline, .profile-pic, .contact-section, .lane-line, .road-noise, .flower, .star, .shooting-star, .wheel, .grass-tuft{
+    animation:none !important;
+  }
+}
