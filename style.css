@@ -421,13 +421,15 @@ html,body{
 }
 
 .social-subtitle {
-  color: #ff99cc; /* Un tono rosa suave */
-  font-family: 'Arial', sans-serif; /* Cámbialo por la fuente que estés usando */
-  font-size: 14px;
+  color: #ff99cc; /* Un rosa que combina con la Cybertruck */
+  background: transparent; /* Esto elimina el fondo blanco */
+  font-family: 'Arial', sans-serif;
+  font-size: 13px;
   text-align: center;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 15px; /* Da un pequeño espacio entre los botones y el texto */
   letter-spacing: 1px;
   text-transform: uppercase;
-  opacity: 0.8;
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.4); /* Un brillo sutil */
+  position: relative;
+  z-index: 10; /* Asegura que quede por encima de las estrellas */
 }
