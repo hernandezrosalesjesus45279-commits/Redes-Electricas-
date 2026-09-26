@@ -419,3 +419,15 @@ html,body{
     animation:none !important;
   }
 }
+
+.social-subtitle {
+  color: #ff99cc; /* Un tono rosa suave */
+  font-family: 'Arial', sans-serif; /* Cámbialo por la fuente que estés usando */
+  font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
