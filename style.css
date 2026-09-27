@@ -434,3 +434,8 @@ html,body{
   position: relative;
   z-index: 10; /* Asegura que quede por encima de las estrellas */
 }
+
+.carretera, .rueda {
+  will-change: transform;
+  transform: translateZ(0);
+}
