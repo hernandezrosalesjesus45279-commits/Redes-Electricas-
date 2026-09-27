@@ -239,6 +239,25 @@ html,body{
   color: var(--truck-pink);
 }
 
+/* ============ SUBTÍTULO FLOTANTE ============ */
+.social-subtitle {
+  color: #ff99cc;
+  background: transparent;
+  font-family: 'Arial', sans-serif;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
+  /* Asegura que siempre quede debajo de los botones sin romper el fondo */
+  position: absolute;
+  top: 100%;
+  margin-top: 20px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
 @keyframes heroIn{
   from{opacity:0; transform:translateY(14px);}
   to{opacity:1; transform:translateY(0);}
@@ -268,21 +287,21 @@ html,body{
   min-height:70px;
 }
 
-/* Mechones de pasto */
 .grass-tuft {
   position:absolute;
   transform-origin:bottom center;
   animation:sway 2.5s ease-in-out infinite alternate;
   z-index: 1;
+  will-change: transform; /* Optimización GPU */
 }
 
-/* Flores más visibles */
 .flower{
   position:absolute;
   transform-origin:bottom center;
   animation:sway 3.4s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.25)); /* Brillo sutil */
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
   z-index: 2;
+  will-change: transform; /* Optimización GPU */
 }
 .flower svg{display:block; width:100%; height:100%;}
 
@@ -291,7 +310,7 @@ html,body{
   50%{transform:rotate(4deg);}
 }
 
-/* ============ CARRETERA ============ */
+/* ============ CARRETERA Y LÍNEAS OPTIMIZADAS ============ */
 .road{
   position:relative;
   flex:1.6 1 auto;
@@ -303,27 +322,30 @@ html,body{
 
 .road-noise{
   position:absolute;
-  inset:0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200%; /* Doble ancho para que nunca se acabe la textura al moverse */
   background-image:repeating-linear-gradient(
     100deg,
     rgba(255,255,255,.02) 0 2px,
     transparent 2px 26px
   );
   animation:noiseMove 1.2s linear infinite;
+  will-change: transform; /* Optimización GPU */
 }
 
 @keyframes noiseMove{
-  from{background-position-x:0;}
-  to{background-position-x: 260px;}
+  from{ transform: translateX(0) translateZ(0); }
+  to{ transform: translateX(-260px) translateZ(0); }
 }
 
 .lane-line{
   position:absolute;
   top:50%;
-  left:-40px;
-  right:-40px;
+  left: 0;
+  width: 200%; /* Doble ancho para que nunca se acabe la textura al moverse */
   height:8px;
-  transform:translateY(-50%);
   background-image:repeating-linear-gradient(
     to right,
     var(--lane) 0 46px,
@@ -331,11 +353,12 @@ html,body{
   );
   animation:laneMove 1.2s linear infinite;
   box-shadow:0 0 10px rgba(255,204,51,.3);
+  will-change: transform; /* Optimización GPU */
 }
 
 @keyframes laneMove{
-  from{background-position-x:0;}
-  to{background-position-x:88px;}
+  from{ transform: translateY(-50%) translateX(0) translateZ(0); }
+  to{ transform: translateY(-50%) translateX(-88px) translateZ(0); }
 }
 
 /* ============ CYBERTRUCK ============ */
@@ -343,15 +366,15 @@ html,body{
   position: absolute;
   bottom: 4%;
   left: 50%;
-  transform: translateX(-50%);
   width: min(80vw, 580px);
   filter: drop-shadow(0 14px 14px rgba(0,0,0,.8));
   animation: driveSuspension 0.4s ease-in-out infinite alternate;
+  will-change: transform; /* Optimización GPU */
 }
 
 @keyframes driveSuspension {
-  0% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
-  100% { transform: translateX(-50%) translateY(3px) rotate(0.2deg); }
+  0% { transform: translateX(-50%) translateY(0px) rotate(0deg) translateZ(0); }
+  100% { transform: translateX(-50%) translateY(3px) rotate(0.2deg) translateZ(0); }
 }
 
 .truck{width:100%; height:auto; display:block; overflow:visible;}
@@ -386,15 +409,15 @@ html,body{
 .truck-motto{
   font-family:sans-serif(--font-display);
   font-weight:700;
-  font-size:18px; /* Más grande y legible */
+  font-size:18px; 
   fill:#fff5fa;
   letter-spacing:.06em;
   text-anchor:middle;
 }
 
-/* Ejes de rotación actualizados a las nuevas coordenadas */
 .wheel{
   animation:spin 1.2s linear infinite;
+  will-change: transform; /* Optimización GPU */
 }
 .wheel-front{ transform-origin: 120px 150px; }
 .wheel-rear{ transform-origin: 390px 150px; }
@@ -406,7 +429,21 @@ html,body{
 .wheel .hub-cap{fill:#ececed;}
 
 @keyframes spin{
-  to{ transform:rotate(-360deg); }
+  to{ transform:rotate(-360deg) translateZ(0); }
+}
+
+/* ============ OPTIMIZACIÓN EXCLUSIVA PARA MÓVILES ============ */
+@media (max-width: 768px) {
+  /* Apagamos luces secundarias que consumen recursos gráficos en celular */
+  .social-subtitle {
+    text-shadow: 0 0 2px rgba(255, 105, 180, 0.2); 
+  }
+  .profile-pic {
+    box-shadow: 0 0 5px rgba(217, 79, 140, 0.3);
+  }
+  .lane-line {
+    box-shadow: none; /* Quitamos el brillo a la línea amarilla */
+  }
 }
 
 @media (max-width:420px){
@@ -419,23 +456,4 @@ html,body{
   .brand, .tagline, .profile-pic, .contact-section, .lane-line, .road-noise, .flower, .star, .shooting-star, .wheel, .grass-tuft{
     animation:none !important;
   }
-}
-
-.social-subtitle {
-  color: #ff99cc; /* Un rosa que combina con la Cybertruck */
-  background: transparent; /* Esto elimina el fondo blanco */
-  font-family: 'Arial', sans-serif;
-  font-size: 13px;
-  text-align: center;
-  margin-top: 15px; /* Da un pequeño espacio entre los botones y el texto */
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 0 0 5px rgba(255, 105, 180, 0.4); /* Un brillo sutil */
-  position: relative;
-  z-index: 10; /* Asegura que quede por encima de las estrellas */
-}
-
-.carretera, .rueda {
-  will-change: transform;
-  transform: translateZ(0);
 }
