@@ -276,7 +276,7 @@ html,body{
 .grass{
   position:relative;
   flex:1 1 auto;
-  overflow:hidden;
+  overflow:visible;
 }
 .grass-top{
   background:linear-gradient(to bottom, var(--grass-1), var(--grass-2));
