@@ -5,7 +5,7 @@ const CONFIG = {
   discord: "https://discord.gg/MQWF6vTzh",
   twitch: "https://www.twitch.tv/nitzel_v",
   instagram: "https://www.instagram.com/nitzelmx?stkn=MTFnczFua24zMjNrZw==",
-  x: "https://x.com/nitzel_v",
+  x: "https://x.com/nitzelvv",
   email: "contacto@nitzel.com"
 };
 
