@@ -242,20 +242,14 @@ html,body{
 /* ============ SUBTÍTULO FLOTANTE ============ */
 .social-subtitle {
   color: #ff99cc;
-  background: transparent;
-  font-family: 'Arial', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body); /* Usa la misma fuente que el resto */
+  font-size: 11px; /* Un tamaño más discreto */
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
-  /* Asegura que siempre quede debajo de los botones sin romper el fondo */
-  position: absolute;
-  top: 100%;
-  margin-top: 20px;
-  left: 0;
-  width: 100%;
-  z-index: 10;
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
+  margin-top: 20px; /* Da un respiro justo debajo del botón de correo */
+  opacity: 0.8; /* Lo hace menos invasivo */
 }
 
 @keyframes heroIn{
