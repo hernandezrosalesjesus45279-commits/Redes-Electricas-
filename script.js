@@ -18,9 +18,9 @@ document.getElementById("text-mail").textContent = CONFIG.email;
 /* ======================================================
    ESTRELLAS Y ESTRELLAS FUGACES
    ====================================================== */
-function buildStars() {
+// Se agregó el parámetro 'starCount' para poder reducirlo en móviles
+function buildStars(starCount = 120) {
   const container = document.getElementById("stars");
-  const starCount = 120;
 
   for (let i = 0; i < starCount; i++) {
     const star = document.createElement("div");
@@ -98,7 +98,7 @@ function plantGrass(containerId, count) {
 }
 
 /* ======================================================
-   FLORES (Ajustadas para no pegar con la raya divisora)
+   FLORES 
    ====================================================== */
 const FLOWER_SVGS = {
   rosa_neon: `
@@ -138,13 +138,11 @@ function scatterFlowers(containerId, count){
     flower.className = "flower";
     const type = types[Math.floor(Math.random() * types.length)];
     
-    // Tamaños reducidos para que entren bien en las franjas de pasto
     const size = 15 + Math.random() * 12; 
     flower.style.width = size + "px";
     flower.style.height = (size * 2.9) + "px";
     
     flower.style.left = (Math.random() * 94) + "%";
-    // Margen inferior seguro para que el tallo empiece dentro del pasto
     flower.style.bottom = (2 + Math.random() * 6) + "px"; 
     
     flower.style.animationDelay = (Math.random() * 3).toFixed(2) + "s";
@@ -153,12 +151,24 @@ function scatterFlowers(containerId, count){
   }
 }
 
-// Inicializamos todo
-buildStars();
+/* ======================================================
+   INICIALIZACIÓN OPTIMIZADA PARA MÓVILES
+   ====================================================== */
+
+// Detecta si la pantalla es menor a 768px (teléfonos y tablets pequeñas)
+let esMovil = window.innerWidth <= 768;
+
+// Asigna cantidades dependiendo del dispositivo
+let cantEstrellas = esMovil ? 40 : 120; // 40 en móvil, 120 en PC
+let cantPasto     = esMovil ? 25 : 70;  // 25 en móvil, 70 en PC
+let cantFlores    = esMovil ? 20 : 70;  // 20 en móvil, 70 en PC
+
+buildStars(cantEstrellas);
 buildClouds();
 
-plantGrass("grassTop", 70);
-scatterFlowers("grassTop", 70);
+plantGrass("grassTop", cantPasto);
+scatterFlowers("grassTop", cantFlores);
 
-plantGrass("grassBottom", 80);
-scatterFlowers("grassBottom", 60);
+// Si tienes un contenedor "grassBottom" en el HTML, puedes descomentar esto:
+// plantGrass("grassBottom", cantPasto);
+// scatterFlowers("grassBottom", cantFlores);
