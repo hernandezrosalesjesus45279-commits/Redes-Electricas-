@@ -2,7 +2,7 @@
    CONFIGURA AQUÍ tus enlaces reales y tu correo.
    ====================================================== */
 const CONFIG = {
-  discord: "https://discord.gg/MQWF6vTzh",
+  discord: "https://discord.gg/TjqUFvzw8",
   twitch: "https://www.twitch.tv/nitzel_v",
   instagram: "https://www.instagram.com/nitzelmx?stkn=MTFnczFua24zMjNrZw==",
   x: "https://x.com/nitzelvv",
